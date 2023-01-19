@@ -30,8 +30,8 @@ const parseBook = (HTML, url) => {
   
   // Parse author information
   return new Book(
-    $(".byline").text().trim(),
     $("h2.title").text().trim(),
+    $(".byline").text().trim(),
     url,
     bookStats
   )
