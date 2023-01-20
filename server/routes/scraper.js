@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
+    console.log(req.user)
     const url = req.query.url;
     const HTML = await axios.get(url, {
       headers: {

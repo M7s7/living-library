@@ -1,6 +1,5 @@
+// require(dotenv)
 const mongoose = require('mongoose');
-require('dotenv').config();
-
 const password = encodeURIComponent(process.env.MONGO_PASSWORD);
 const uri = process.env.MONGO_URI.replace("<password>", password);
 
@@ -9,9 +8,12 @@ const connect = async () => {
     .set('strictQuery', false)
     .connect(uri, { 
       keepAlive: true, 
-      keepAliveInitialDelay: 300000 
+      keepAliveInitialDelay: 300000,
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+
     })
-    .then(() => console.log("Successfully connected to mongoDB!"))
+    .then(() => console.log("Successfully connected to database!"))
     .catch(e => console.log(e));
 }
 
