@@ -1,13 +1,10 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
 
 const bookSchema = new mongoose.Schema({
+  book: {
     title: String,
     author: String,
-    url: {
-      type: String, 
-      unique: true
-      },
+    url: String,
     stats: {
       published: String,
       status: String,
@@ -18,8 +15,8 @@ const bookSchema = new mongoose.Schema({
       bookmarks: String, 
       hits: String
     }
-  })
-
-bookSchema.plugin(uniqueValidator);
+  },
+  user: {type: String, required: true}
+})
 
 module.exports = mongoose.model("BookModel", bookSchema);

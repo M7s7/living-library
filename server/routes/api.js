@@ -1,15 +1,29 @@
 const express = require('express');
-const BookModel = require('../models/bookModel');
+const Book = require('../models/bookModel');
 
 const router = express.Router();
 
 // /create <body is Book class>
 router.post("/create", async (req, res) => {
   try {
-    const book = new BookModel(req.body);
-    await book.save();
-    console.log(`Saved "${book.title}" to database`);
-    res.send(book);
+    const matching = await Book.findOne({
+      "book.url": req.body.url,
+      user: req.user.username
+    })
+
+    if (matching !== null) {
+      console.log("CRUD - Create: Book already exists!");
+      res.sendStatus(400);
+    } else {
+      const bookModel = new Book({
+        book: req.body,
+        user: req.user.username,
+      });
+  
+      await bookModel.save();
+      console.log(`Saved "${bookModel.book.title}" to database`);
+      res.send(bookModel.book);
+    }
   } catch (e) {
     console.log(`CRUD: Create error - ${e}`);
     res.sendStatus(400);
@@ -19,14 +33,17 @@ router.post("/create", async (req, res) => {
 // /read?url=XYZ
 router.get("/read", async (req, res) => {
   try {
-    const book = await BookModel.findOne({ url: req.query.url });
+    const bookModel = await Book.findOne({ 
+      "book.url": req.query.url,
+      user: req.user.username,
+    });
     
-    if (book == null) {
+    if (bookModel == null) {
       console.log("CRUD - Read: Book not found!");
       res.sendStatus(400);
     } else {
-      console.log(`Read "${book.title}" from database`);
-      res.send(book);
+      console.log(`Read "${bookModel.book.title}" from database`);
+      res.send(bookModel.book);
     }
   } catch (e) {
     console.log(`CRUD: Read error - ${e}`);
@@ -37,17 +54,19 @@ router.get("/read", async (req, res) => {
 // /update?url=XYZ, <body>
 router.put("/update", async (req, res) => {
   try {
-    const book = await BookModel.findOneAndReplace(
-      { url: req.query.url },
+    const bookModel = await Book.findOneAndReplace(
+      { "book.url": req.query.url,
+        user: req.user.username
+      },
       req.body
     );
     
-    if (book == null) {
+    if (bookModel == null) {
       console.log("CRUD - Update: Book not found!");
       res.sendStatus(400);
     } else {
-      console.log(`Updated "${book.title}"`); 
-      res.send(book);
+      console.log(`Updated "${bookModel.book.title}"`); 
+      res.send(bookModel.book);
     }
   } catch (e) {
     console.log(`CRUD: Update error - ${e}`);
@@ -58,11 +77,13 @@ router.put("/update", async (req, res) => {
 // /delete?url=XYZ
 router.delete("/delete", async (req, res) => {
   try {
-    const book = await BookModel.findOneAndDelete(
-      { url: req.query.url }
+    const bookModel = await Book.findOneAndDelete(
+      { "book.url": req.query.url,
+        user: req.user.username
+      }
     );
-    console.log(`Deleted "${book.title}"`);
-    res.send(book);
+    console.log(`Deleted "${bookModel.book.title}"`);
+    res.send(bookModel.book);
   } catch (e) {
     console.log(`CRUD: Delete error - ${e}`);
     res.sendStatus(400);
@@ -72,7 +93,9 @@ router.delete("/delete", async (req, res) => {
 // /all
 router.get("/all", async (req, res) => {
   try {
-    const all = await BookModel.find({});
+    const all = await Book.find({ user: req.user.username });
+    console.log(typeof(all), all)
+
     res.send(all);
   } catch (e) {
     console.log(`CRUD: All error - ${e}`);

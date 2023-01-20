@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require('dotenv').config();
 }
-const User = require('./models/userModel')
+const User = require('./models/userModel')// Might remove later
 
 const express = require('express');
 const cors = require('cors');
