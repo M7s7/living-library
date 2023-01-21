@@ -23,6 +23,12 @@ router.get("/", async (req, res) => {
 
 const parseBook = (HTML, url) => {
   const $ = cheerio.load(HTML);
+
+  // TESTING
+  console.log($("dd.character").find("ul.commas").find("li.last").find("a").first().text())
+
+
+
   // Parse stats
   const bookStats = new Stats();
   $("dl.stats")
