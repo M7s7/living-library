@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     console.log(req.user)
-    const url = req.query.url;
+    const url = `${process.env.SOURCE_WEBSITE}/${req.query.url}`;
     const HTML = await axios.get(url, {
       headers: {
         Cookie: "view_adult=true; path=/"
@@ -34,7 +34,7 @@ const parseBook = (HTML, url) => {
   return new Book(
     $("h2.title").text().trim(),
     $(".byline").text().trim(),
-    url,
+    url.match(/works\/(\d*)/)[1],
     bookStats
   )
 }

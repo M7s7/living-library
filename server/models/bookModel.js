@@ -16,7 +16,8 @@ const bookSchema = new mongoose.Schema({
       hits: String
     }
   },
-  user: {type: String, required: true}
+  user: {type: String, required: true},
+  timestamp: Number,
 })
 
 module.exports = mongoose.model("BookModel", bookSchema);

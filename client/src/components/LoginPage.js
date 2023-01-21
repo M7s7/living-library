@@ -1,4 +1,3 @@
-import Button from './UI/Button'
 import LoginForm from './LoginForm'
 
 const LoginPage = ({ setNewUser }) => (

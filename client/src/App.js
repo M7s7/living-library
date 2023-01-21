@@ -13,8 +13,6 @@ const App = () => {
     if (loggedInUser) {
       setUser(loggedInUser);
     }
-    // Testing
-    //scrapeBook("https://archiveofourown.org/works/39847746/chapters/103900152#workskin");
   }, [])
 
   const handleNewUser = (name) => {

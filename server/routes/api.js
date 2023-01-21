@@ -5,10 +5,11 @@ const router = express.Router();
 
 // /create <body is Book class>
 router.post("/create", async (req, res) => {
+  console.log(req.user, req.body)
   try {
     const matching = await Book.findOne({
       "book.url": req.body.url,
-      user: req.user.username
+      user: req.user.username,
     })
 
     if (matching !== null) {
@@ -18,11 +19,12 @@ router.post("/create", async (req, res) => {
       const bookModel = new Book({
         book: req.body,
         user: req.user.username,
+        timestamp: Date.now()
       });
   
       await bookModel.save();
       console.log(`Saved "${bookModel.book.title}" to database`);
-      res.send(bookModel.book);
+      res.send(bookModel);
     }
   } catch (e) {
     console.log(`CRUD: Create error - ${e}`);
@@ -43,7 +45,7 @@ router.get("/read", async (req, res) => {
       res.sendStatus(400);
     } else {
       console.log(`Read "${bookModel.book.title}" from database`);
-      res.send(bookModel.book);
+      res.send(bookModel);
     }
   } catch (e) {
     console.log(`CRUD: Read error - ${e}`);
@@ -58,7 +60,11 @@ router.put("/update", async (req, res) => {
       { "book.url": req.query.url,
         user: req.user.username
       },
-      req.body
+      {
+        book: req.body,
+        user: req.user.username,
+        timestamp: Date.now()
+      }
     );
     
     if (bookModel == null) {
@@ -66,7 +72,7 @@ router.put("/update", async (req, res) => {
       res.sendStatus(400);
     } else {
       console.log(`Updated "${bookModel.book.title}"`); 
-      res.send(bookModel.book);
+      res.send(bookModel);
     }
   } catch (e) {
     console.log(`CRUD: Update error - ${e}`);
@@ -83,7 +89,7 @@ router.delete("/delete", async (req, res) => {
       }
     );
     console.log(`Deleted "${bookModel.book.title}"`);
-    res.send(bookModel.book);
+    res.send(bookModel);
   } catch (e) {
     console.log(`CRUD: Delete error - ${e}`);
     res.sendStatus(400);
@@ -96,7 +102,7 @@ router.get("/all", async (req, res) => {
     console.log(req.user, req.session)
     const all = await Book.find({ user: req.user.username });
     console.log(typeof(all), all)
-
+  
     res.send(all);
   } catch (e) {
     console.log(`CRUD: All error - ${e}`);

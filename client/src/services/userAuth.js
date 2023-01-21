@@ -6,10 +6,13 @@ const baseUrl = process.env.REACT_APP_BASE_URL;
 // Sign Up
 const attemptSignup = async (loginData) => {
   try {
-    const res = await axios.post(`${baseUrl}/auth/signup`, loginData);
-    console.log(res);
+    const res = await axios.post(`${baseUrl}/auth/signup`, loginData, {
+      withCredentials: true
+    });
+    return res.data;
   } catch (e) {
     console.log(`Error with signup: ${e}`);
+    return null;
   }
 
 }
@@ -17,21 +20,27 @@ const attemptSignup = async (loginData) => {
 // Log In 
 const attemptLogin = async (loginData) => {
   try {
-    const res = await axios.post(`${baseUrl}/auth/login`, loginData);
-    console.log(res.data);
+    const res = await axios.post(`${baseUrl}/auth/login`, loginData, {
+      withCredentials: true
+    });
+    console.log(res);
     return res.data;
   } catch (e) {
     console.log(`Error with login: ${e}`);
+    return null;
   }
 }
 
 // Log Out
 const attemptLogout = async () => {
   try {
-    await axios.delete(`${baseUrl}/auth/logout`);
+    await axios.delete(`${baseUrl}/auth/logout`, {
+      withCredentials: true
+    });
     console.log("Successful logout");
   } catch (e) {
     console.log(`Error with logout: ${e}`);
+    throw new Error();
   }
 }
 

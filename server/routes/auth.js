@@ -27,6 +27,7 @@ router.delete("/logout", (req, res, next) => {
         next(err);
       }
     });
+    console.log("Successful logout");
   }
 )
 

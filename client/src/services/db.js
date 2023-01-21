@@ -8,8 +8,19 @@ const fetchAllBooks = async () => {
     return all;
 
   } catch (e) {
+    console.log("Error");
     throw new Error();
   }
 }
 
-export { fetchAllBooks };
+const addBook = async (book) => {
+  try {
+    const bookData = await axios.post(`${baseUrl}/api/create`, book, { withCredentials: true });
+    return bookData.data;
+  } catch (e) {
+    console.log("Book already exists in database");
+    return null;
+  }
+}
+
+export { fetchAllBooks, addBook };
