@@ -6,7 +6,8 @@ router.post(
   "/signup",
   passport.authenticate("local-signup"), 
   (req, res, next) => {
-    res.send(`Successfully created ${req.user}`);
+    console.log(`Successful signup for ${req.user.username}`);
+    res.send(req.user.username);
   }
 )
 
@@ -14,19 +15,18 @@ router.post(
   "/login",
   passport.authenticate("local-login"),
   (req, res, next) => {
-    res.send(`Successfully logged in ${req.user}`);
+    console.log(`Successful login for ${req.user.username}`);
+    res.send(req.user.username);
   }
 )
 
 router.delete("/logout", (req, res, next) => {
-    const user = req.user;
     req.logout(err => {
       if (err) {
         console.log("Error in logout");
         next(err);
       }
     });
-    res.redirect("/login");
   }
 )
 

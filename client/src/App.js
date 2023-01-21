@@ -1,21 +1,14 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import scrapeBook from './services/scrapeBook';
 import LoginPage from './components/LoginPage';
 import Library from './components/Library';
 import { attemptLogout } from './services/userAuth';
 
 const App = () => {
-  const [data, setData] = useState([]);
-  const [checked, setChecked] = useState({});
   const [User, setUser] = useState(null);
 
   // Initial set-up
   useEffect(() => {
-    const newChecked = {};
-    data.forEach((book) => newChecked[book.url] = false);
-    setChecked(newChecked)
-    
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
       setUser(loggedInUser);

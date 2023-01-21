@@ -93,6 +93,7 @@ router.delete("/delete", async (req, res) => {
 // /all
 router.get("/all", async (req, res) => {
   try {
+    console.log(req.user, req.session)
     const all = await Book.find({ user: req.user.username });
     console.log(typeof(all), all)
 
