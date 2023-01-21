@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+const baseUrl = process.env.REACT_APP_SERVER_URL;
 
 // Note: loginData is an Object: {username: XX, password: XX}
 // Sign Up
@@ -40,7 +40,6 @@ const attemptLogout = async () => {
     console.log("Successful logout");
   } catch (e) {
     console.log(`Error with logout: ${e}`);
-    throw new Error();
   }
 }
 

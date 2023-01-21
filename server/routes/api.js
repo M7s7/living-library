@@ -5,6 +5,7 @@ const router = express.Router();
 
 // /create <body is Book class>
 router.post("/create", async (req, res) => {
+  console.log("PSOTING EF")
   console.log(req.user, req.body)
   try {
     const matching = await Book.findOne({

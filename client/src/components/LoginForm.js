@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { attemptSignup, attemptLogin } from '../services/userAuth';
 
 const LoginForm = ({ setNewUser }) => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [Message, setMessage] = useState("");
   const [loading, isLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -18,12 +18,13 @@ const LoginForm = ({ setNewUser }) => {
         if (newUser !== null) {
           setNewUser(newUser);
         } else {
-          setErrorMessage("Login failed: the username or password was incorrect!");
+          setMessage("Login failed: the username or password was incorrect!");
         }
       } else if (id === "signup") {
         const newUser = await attemptSignup(LoginData);
+        setMessage("Signup successful! Log in with the same details to continue.");
         if (newUser === null) {
-          setErrorMessage("Signup failed: this username is already taken!");
+          setMessage("Signup failed: this username is already taken!");
         }
       }
       isLoading(false);
@@ -36,15 +37,13 @@ const LoginForm = ({ setNewUser }) => {
 
   if (loading) {
     return (
-      <> Currently loading... </>
+      <> Please wait... </>
     )
   }
 
   return (
     <div>
-      {errorMessage && (
-        <p> {errorMessage} </p>
-      )}
+      {Message && <div>{Message}</div>}
     <form onSubmit={handleSubmit}>
       <div>
         <label>Username </label>

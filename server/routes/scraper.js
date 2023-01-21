@@ -16,7 +16,8 @@ router.get("/", async (req, res) => {
     });
     res.send(parseBook(HTML.data, url));
   } catch (e) {
-    console.log("Error")
+    console.log(`scraper.js get request failed - URL invalid: ${e}`);
+    res.sendStatus(400);
   }
 })
 

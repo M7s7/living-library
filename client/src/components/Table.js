@@ -39,17 +39,35 @@ const Row = ({ bookData, checked, handleCheck }) => {
   const book = bookData.book;
   return (
     <tr>
-      <td><input type="checkbox" onChange={() => handleCheck(book.url)} checked={checked[book.url] === true}/></td>
-      <td><a href={`${process.env.REACT_APP_WORK_URL}/${book.url}`}>{book.title}</a> </td>
-      <td><a href={`${process.env.REACT_APP_USER_URL}/${book.author}`}>{book.author}</a> </td>
-      <td>{book.stats.published.split("-").reverse().join("/")}</td>
+      <td>
+        <input 
+          type="checkbox" 
+          onChange={() => handleCheck(book.url)} 
+          checked={checked[book.url] === true}
+        />
+      </td>
+      <td>
+        <a href={`${process.env.REACT_APP_WORK_URL}/${book.url}`}>
+          {book.title}
+        </a> 
+      </td>
+      <td>
+        <a href={`${process.env.REACT_APP_USER_URL}/${book.author}`}>
+          {book.author}
+        </a> 
+      </td>
+      <td>
+        {book.stats.published.split("-").reverse().join("/")}
+      </td>
       <td>
         {book.stats.status 
           ? book.stats.status.split("-").reverse().join("/")
           : "Never updated"
         }
       </td>
-      <td>{date.toLocaleString()}</td>
+      <td>
+        {date.toLocaleString()}
+      </td>
     </tr>
   )
 }

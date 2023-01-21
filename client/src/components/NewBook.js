@@ -1,24 +1,40 @@
 import scrapeBook from '../services/scrapeBook';
 import { addBook } from '../services/db';
 
-const NewBook = ({ setData }) => {
+const NewBook = ({ setData, setLoading, setErrorMessage }) => {
 
   const handleNewBook = async (e) => {
     try {
+      setLoading(true);
       e.preventDefault();
       const data = new FormData(e.target);
       const link = Object.fromEntries(data.entries()).url;
-      const url = link.match(/works\/(\d*)/)[1];
-      
-      const bookData = await scrapeBook(url);
+
+      // Regex to extract work id (url)
+      const url = link.match(/works\/(\d*)/);
+      if (url === null) {
+        setErrorMessage("The URL does not link to a valid work!");
+        throw new Error("URL does not link to a valid work");
+      }
+
+      // Scraping data from website
+      const bookData = await scrapeBook(url[1]);
+      if (bookData === null) {
+        setErrorMessage("The URL does not link to a valid work!");
+        throw new Error("URL does not link to a valid work");
+      }
       // Submit to database
       const newBook = await addBook(bookData);
-      if (newBook !== null) {
-        setData(prev => prev.concat(newBook));
+      if (newBook === null) {
+        setErrorMessage("The book already exists");
+        throw new Error("Tried to add existing book");
       }
-      //e.target.reset();
+      setData(prev => prev.concat(newBook));
+      e.target.reset();
+      setLoading(false);
     } catch (e) {
-      throw new Error();
+      setLoading(false);
+      console.log(e);
     }
   }
 
