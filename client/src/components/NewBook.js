@@ -11,12 +11,12 @@ const NewBook = ({ setData }) => {
       const url = link.match(/works\/(\d*)/)[1];
       
       const bookData = await scrapeBook(url);
-
       // Submit to database
       const newBook = await addBook(bookData);
       if (newBook !== null) {
         setData(prev => prev.concat(newBook));
       }
+      //e.target.reset();
     } catch (e) {
       throw new Error();
     }
