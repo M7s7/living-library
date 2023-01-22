@@ -1,9 +1,14 @@
 class Book {
-  constructor(title, author, url, stats) {
+  constructor(title, author, url, rating, category, warnings, language, stats, tags) {
     this.title = title;
     this.author = author;
     this.url = url; // Url refers to the reference number after /work/
+    this.rating = rating;
+    this.category = category;
+    this.warnings = warnings;
+    this.language = language;
     this.stats = stats;
+    this.tags = tags;
   }
 } 
 
@@ -20,7 +25,21 @@ class Stats {
   }
 }
 
+class Tags {
+  constructor (fandoms, relationships, characters, additional) {
+    this.fandoms = fandoms;
+    this.relationships = relationships;
+    this.characters = characters;
+    this.additional = additional;
+  }
+}
+
+
+
 module.exports = {
   Book: Book,
-  Stats: Stats
+  Stats: Stats, 
+  Tags: Tags
 }
+
+

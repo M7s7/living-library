@@ -5,6 +5,10 @@ const bookSchema = new mongoose.Schema({
     title: String,
     author: String,
     url: String,
+    rating: String,
+    category: String,
+    warnings: String,
+    language: String,
     stats: {
       published: String,
       status: String,
@@ -14,6 +18,12 @@ const bookSchema = new mongoose.Schema({
       kudos: String,
       bookmarks: String, 
       hits: String
+    },
+    tags: {
+      fandoms: Array,
+      relationships: Array,
+      characters: Array,
+      additional: Array,
     }
   },
   user: {type: String, required: true},
