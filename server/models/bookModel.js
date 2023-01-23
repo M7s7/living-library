@@ -12,12 +12,13 @@ const bookSchema = new mongoose.Schema({
     stats: {
       published: String,
       status: String,
+      status_flag: String,
       words: String,
       chapters: String,
       comments: String,
       kudos: String,
       bookmarks: String, 
-      hits: String
+      hits: String,
     },
     tags: {
       fandoms: Array,

@@ -13,7 +13,7 @@ class Book {
 } 
 
 class Stats {
-  constructor (published, status, words, chapters, comments, kudos, bookmarks, hits) {
+  constructor (published, status, words, chapters, comments, kudos, bookmarks, hits, status_flag) {
     this.published = published;
     this.status = status;
     this.words = words;
@@ -22,6 +22,7 @@ class Stats {
     this.kudos = kudos;
     this.bookmarks = bookmarks;
     this.hits = hits;
+    this.status_flag = status_flag;
   }
 }
 

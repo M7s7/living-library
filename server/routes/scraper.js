@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const { Book, Stats } = require('../classes/book');
+const book = require('../classes/book');
 
 const router = express.Router();
 
@@ -56,6 +57,10 @@ const parseBook = (HTML, url) => {
     .each((i, item) => {
     bookStats[item.attribs.class] = item.children[0].data;
     })
+
+  // Check for WIP/Completed works
+  bookStats.status_flag = $("dt.status").text().slice(0, -1);
+
   
   // Parse author information: title, author, url, rating, category, warnings, language, stats, tags
   return new Book(
