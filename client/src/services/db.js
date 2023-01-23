@@ -48,4 +48,24 @@ const updateBook = async (url, book) => {
   }
 }
 
-export { fetchAllBooks, addBook, deleteBook, updateBook };
+
+const favouriteBook = async (url) => {
+  try {
+    // No update needed when favouriting, so can pull from DB
+    const oldBook = await axios.get(`${baseUrl}/api/read`, {
+      withCredentials: true,
+      params: { url: url }
+    });
+
+    const bookData = await axios.put(`${baseUrl}/api/update`, oldBook.data.book, { 
+      withCredentials: true,
+      params: { url: url, favourite: true}
+    });
+    console.log(`Favourite toggled book ${bookData.data.book.title}`);
+    return bookData.data;
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+export { fetchAllBooks, addBook, deleteBook, updateBook, favouriteBook };

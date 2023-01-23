@@ -25,7 +25,7 @@ const App = () => {
     attemptLogout();
     setUser(null);
   }
-
+  
   return (
     <div>
       {User === null 

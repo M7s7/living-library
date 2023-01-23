@@ -29,6 +29,7 @@ const bookSchema = new mongoose.Schema({
   },
   user: {type: String, required: true},
   timestamp: Number,
+  favourite: Boolean,
 })
 
 module.exports = mongoose.model("BookModel", bookSchema);

@@ -8,16 +8,17 @@ const Table = ({ data, checked, handleCheck }) => {
     )
   }
 
-  console.log(checked)
   return (
     <div>
+      <p>Found {data.length} {data.length === 1 ? "result":"results"}: </p>
         <table>
           <tr>
             <th></th>
             <th>Title</th>
             <th>Author</th>
             <th>Published</th>
-            <th>Last Updated</th>
+            <th>Updated</th>
+            <th>Status</th>
             <th>Last Checked</th>
           </tr>
           {data.map(bookData => 
@@ -64,6 +65,9 @@ const Row = ({ bookData, checked, handleCheck }) => {
           ? book.stats.status.split("-").reverse().join("/")
           : "Never updated"
         }
+      </td>
+      <td>
+        {book.stats.status_flag}
       </td>
       <td>
         {date.toLocaleString()}

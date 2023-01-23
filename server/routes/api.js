@@ -5,8 +5,6 @@ const router = express.Router();
 
 // /create <body is Book class>
 router.post("/create", async (req, res) => {
-  console.log("PSOTING EF")
-  console.log(req.user, req.body)
   try {
     const matching = await Book.findOne({
       "book.url": req.body.url,
@@ -20,7 +18,8 @@ router.post("/create", async (req, res) => {
       const bookModel = new Book({
         book: req.body,
         user: req.user.username,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        favourite: false,
       });
   
       await bookModel.save();
@@ -57,6 +56,12 @@ router.get("/read", async (req, res) => {
 // /update?url=XYZ, <body>
 router.put("/update", async (req, res) => {
   try {
+    const oldBookModel = await Book.findOne({
+      "book.url": req.query.url,
+      user: req.user.username,
+    });
+
+    const flag = req.query.favorite ? oldBookModel.favourite : !oldBookModel.favourite;
     const bookModel = await Book.findOneAndReplace(
       { "book.url": req.query.url,
         user: req.user.username
@@ -64,6 +69,7 @@ router.put("/update", async (req, res) => {
       {
         book: req.body,
         user: req.user.username,
+        favourite: flag,
         timestamp: Date.now()
       }
     );
