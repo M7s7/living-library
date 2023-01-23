@@ -67,7 +67,7 @@ const Row = ({ bookData, checked, handleCheck }) => {
         }
       </td>
       <td>
-        {book.stats.status_flag}
+        {book.stats.status_flag ? book.stats.status_flag : "N/A"}
       </td>
       <td>
         {date.toLocaleString()}

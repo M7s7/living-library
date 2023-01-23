@@ -28,7 +28,7 @@ const deleteBook = async (url) => {
       withCredentials: true,
       params: { url: url }
     });
-    console.log(`Deleted book ${bookData.data}`);
+    console.log(`Deleted book ${bookData.data.book.title}`);
     return bookData.data;
   } catch (e) {
     return null;
@@ -41,7 +41,7 @@ const updateBook = async (url, book) => {
       withCredentials: true,
       params: { url: url }
     });
-    console.log(`Updated book ${bookData.data}`);
+    console.log(`Updated book ${bookData.data.book.title}`);
     return bookData.data;
   } catch (e) {
     return null;

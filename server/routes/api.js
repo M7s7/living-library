@@ -61,7 +61,8 @@ router.put("/update", async (req, res) => {
       user: req.user.username,
     });
 
-    const flag = req.query.favorite ? oldBookModel.favourite : !oldBookModel.favourite;
+    const fave = req.query.favourite ? !oldBookModel.favourite : oldBookModel.favourite;
+    const time = req.query.favourite ? oldBookModel.timestamp : Date.now();
     const bookModel = await Book.findOneAndReplace(
       { "book.url": req.query.url,
         user: req.user.username
@@ -69,8 +70,8 @@ router.put("/update", async (req, res) => {
       {
         book: req.body,
         user: req.user.username,
-        favourite: flag,
-        timestamp: Date.now()
+        favourite: fave,
+        timestamp: time,
       }
     );
     

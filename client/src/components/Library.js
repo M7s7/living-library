@@ -10,6 +10,7 @@ const Library = ({ User, handleLogOut }) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [search, setSearch] = useState("");
+  const [favouriteView, setFavouriteView] = useState(false);
 
   const fetchData = async () => {
     const all = await fetchAllBooks();
@@ -120,7 +121,7 @@ const Library = ({ User, handleLogOut }) => {
       
       <div>
         Search by title or author: <input type="text" onChange={handleSearch}/>
-        | Filter by: Favourites... 
+        | Favourite view: {favouriteView ? "On" : "Off"} <button onClick={() => setFavouriteView(!favouriteView)}> Toggle </button>
       </div>
       <button onClick={handleUpdate}> Update </button>
       <button onClick={handleDelete}> Delete </button>
@@ -132,6 +133,11 @@ const Library = ({ User, handleLogOut }) => {
           <div>{errorMessage}</div>
           <Table 
             data={data.filter((item) => {
+              console.log(item.favourite);
+              if (favouriteView && item.favourite === false) {
+                return false;
+              }
+
               return item.book.author.includes(search) || item.book.title.includes(search);
             })}
             checked={checked} 
