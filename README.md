@@ -3,6 +3,9 @@
 
 Web scraper and reading list database tool for online user-generated literature. 
 
+<div align="center">
+	<img src="https://i.ibb.co/RHJ3bNb/demo.gif" width="100%"/>
+</div>
 ## Description
 
 Living Library is a reading list tool that allows the user to add, update, favourite or otherwise mark works of literature published on user-generated literature platforms. Users can filter saved works, and search by author, title or tags. Living Library stores and displays metadata about these works obtained through web-scraping.
